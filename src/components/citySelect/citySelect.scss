@@ -1,0 +1,44 @@
+.user-form__field{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 40px;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+.user-form__label{
+  min-width: 223px;
+
+  font-size: 21px;
+  line-height: 19px;
+}
+
+.form-input__wrapper{
+  position: relative;
+}
+
+.city-input{
+  width: 336px;
+  height: 31px;
+
+  font-size: 16px;
+  line-height: 19px;
+  text-align: left;
+  background: none;
+  border: 1px solid #999999;
+}
+.city-input__expand-btn{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+
+  background: none;
+  border: none;
+  background-image: url("../../assets/img/arrow.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
