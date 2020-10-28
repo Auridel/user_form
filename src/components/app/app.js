@@ -8,11 +8,33 @@ import "./app.scss";
 
 const App = () => {
     const [info, setInfo] = useState({
-        status: "Прежде чем действовать, надо понять", email: "", pass: "", confirm: "", city: "Красноярск", subscribe: ""
+        status: "Прежде чем действовать, надо понять", email: "", pass: "", confirm: "", city: "Красноярск", subscribe: true
     })
     const [errors, setErrors] = useState({
-        email: false, pass: false, confirm: false, city: false
+        email: false, pass: false, confirm: false
     })
+
+    const sendData = () => {
+        const keys = Object.keys(errors);
+        const empty = [];
+        let c = 0;
+        keys.forEach(key => {
+            if(errors[key]) c++;
+            if(!info[key].trim()) empty.push(key);
+        });
+        if(c>0) return false
+        if(empty.length) {
+            empty.forEach(elem => {
+                setErrors((prev) => {
+                    return {
+                        ...prev, [elem]: true
+                    }})
+            });
+            return false;
+        }
+        return true;
+    }
+
 
     return (
         <section className="user-form">
@@ -21,7 +43,7 @@ const App = () => {
                 <CitySelect info={info} setter={setInfo}/>
             </div>
             <PassBlock info={info} setter={setInfo} errors={errors} setErrors={setErrors}/>
-            <ContactBlock info={info} setter={setInfo} errors={errors} setErrors={setErrors}/>
+            <ContactBlock info={info} setter={setInfo} errors={errors} setErrors={setErrors} sendData={sendData}/>
         </section>
     )
 };

@@ -1,11 +1,8 @@
-import React, {useState, useRef} from "react";
+import React, {useRef} from "react";
 
 import "./passBlock.scss";
 
-const PassBlock = ({info, setter}) => {
-    const [errors, setErrors] = useState({
-        pass: false, confirm: false
-    });
+const PassBlock = ({info, setter, errors, setErrors}) => {
     const passRef = useRef();
     const confirmRef = useRef();
 
@@ -44,7 +41,7 @@ const PassBlock = ({info, setter}) => {
                         }}
                         ref={passRef}
                         type="password"
-                        className="form-input__input" id="password"/>
+                        className={`form-input__input${errors.pass? " alert" : ""}`} id="password"/>
                     <span className="form-input__alert">{onPassError()}</span>
                 </div>
                 <span className="user-form__info">Ваш новый пароль должен содержать не менее 5 символов.</span>
@@ -59,7 +56,7 @@ const PassBlock = ({info, setter}) => {
                         }}
                         ref={confirmRef}
                         type="password"
-                        className="form-input__input" id="confirm"/>
+                        className={`form-input__input${errors.confirm? " alert" : ""}`} id="confirm"/>
                     <span className="form-input__alert">{onConfirmError()}</span>
                 </div>
                 <span className="user-form__info">Повторите пароль, пожалуйста, это обезопасит вас с нами

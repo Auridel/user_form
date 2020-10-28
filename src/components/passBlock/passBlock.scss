@@ -35,6 +35,10 @@
   height: 31px;
 
   border: 1px solid #999999;
+
+  &.alert{
+    border: 1px solid #FF0000;
+  }
 }
 
 .form-input__alert{
