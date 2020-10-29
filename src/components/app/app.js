@@ -17,12 +17,12 @@ const App = () => {
     const sendData = () => {
         const keys = Object.keys(errors);
         const empty = [];
-        let c = 0;
+        let counter = 0;
         keys.forEach(key => {
-            if(errors[key]) c++;
+            if(errors[key]) counter++;
             if(!info[key].trim()) empty.push(key);
         });
-        if(c>0) return false
+        if(counter>0) return false
         if(empty.length) {
             empty.forEach(elem => {
                 setErrors((prev) => {
