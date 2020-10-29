@@ -22,7 +22,6 @@ const App = () => {
             if(errors[key]) counter++;
             if(!info[key].trim()) empty.push(key);
         });
-        if(counter>0) return false
         if(empty.length) {
             empty.forEach(elem => {
                 setErrors((prev) => {
@@ -32,6 +31,7 @@ const App = () => {
             });
             return false;
         }
+        if(counter>0) return false;
         return true;
     }
 
