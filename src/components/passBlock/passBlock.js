@@ -1,6 +1,5 @@
 import React, {useRef} from "react";
-
-import "./passBlock.scss";
+import InputField from "../inputField/inputField";
 
 const PassBlock = ({info, setter, errors, setErrors}) => {
     const passRef = useRef();
@@ -21,6 +20,11 @@ const PassBlock = ({info, setter, errors, setErrors}) => {
             else return "";
         }
     }
+    const onPassChange = () => {
+                   setter({...info, pass: passRef.current.value});
+                   validateLength(passRef.current.value);
+    }
+
     const onConfirmError = () => {
         if(confirmRef.current) {
             if (!confirmRef.current.value && errors.confirm) return "Укажите пароль";
@@ -28,37 +32,33 @@ const PassBlock = ({info, setter, errors, setErrors}) => {
             else return "";
         }
     }
+    const onConfirmChange = () => {
+        setter({...info, confirm: confirmRef.current.value});
+        isSame(passRef.current.value, confirmRef.current.value);
+    }
 
     return (
         <div className="user-form__block">
             <div className="user-form__field">
                 <label className="user-form__label" htmlFor="password">Пароль</label>
-                <div className="form-input__wrapper">
-                    <input
-                        onInput={() => {
-                            setter({...info, pass: passRef.current.value});
-                            validateLength(passRef.current.value);
-                        }}
-                        ref={passRef}
-                        type="password"
-                        className={`form-input__input${errors.pass? " alert" : ""}`} id="password"/>
-                    <span className="form-input__alert">{onPassError()}</span>
-                </div>
+                <InputField
+                    type="password"
+                    inputId="password"
+                    inputRef={passRef}
+                    error={errors.pass}
+                    showError={onPassError}
+                    onChange={onPassChange}/>
                 <span className="user-form__info">Ваш новый пароль должен содержать не менее 5 символов.</span>
             </div>
             <div className="user-form__field">
                 <label className="user-form__label" htmlFor="confirm">Пароль еще раз</label>
-                <div className="form-input__wrapper">
-                    <input
-                        onInput={() => {
-                            setter({...info, confirm: confirmRef.current.value})
-                            isSame(passRef.current.value, confirmRef.current.value);
-                        }}
-                        ref={confirmRef}
-                        type="password"
-                        className={`form-input__input${errors.confirm? " alert" : ""}`} id="confirm"/>
-                    <span className="form-input__alert">{onConfirmError()}</span>
-                </div>
+                <InputField
+                    inputId="confirm"
+                    error={errors.confirm}
+                    showError={onConfirmError}
+                    inputRef={confirmRef}
+                    onChange={onConfirmChange}
+                    type="password"/>
                 <span className="user-form__info">Повторите пароль, пожалуйста, это обезопасит вас с нами
 на случай ошибки.</span>
             </div>

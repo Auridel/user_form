@@ -39,7 +39,7 @@
     position: absolute;
     left: 0;
     top: 42px;
-    height: 40px;
+    min-height: 40px;
     min-width: 503px;
     padding: 0 8px;
 
@@ -88,4 +88,23 @@
   line-height: 22px;
   border: none;
   background-color: #0C77BB;
+}
+
+@media (max-width: 830px) {
+  .hello__status{
+    position: static;
+    &:before{
+      display: none;
+    }
+  }
+  .hello__wrapper{
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 604px) {
+  .hello__status{
+    min-width: 0;
+
+  }
 }

@@ -1,4 +1,5 @@
 import React, {useRef, useState} from "react";
+import InputField from "../inputField/inputField";
 
 import "./contactBlock.scss";
 
@@ -12,13 +13,19 @@ const ContactBlock = ({info, setter, errors, setErrors, sendData}) => {
         if(!res) setErrors({...errors, email: true});
         else setErrors({...errors, email: false});
     };
-    const onEmailChange = () => {
+    const onEmailError = () => {
         if(emailRef.current){
             if(!emailRef.current.value && errors.email) return "Укажите E-mail";
             else if(errors.email) return "Неверный E-mail";
             else return "";
         }
     }
+    const onEmailChange = () => {
+        checkEmail(emailRef.current.value)
+        setter({...info, email: emailRef.current.value})
+    }
+
+
     const showLoader = () => {
         if(load.loading) return <div className="loader load"/>;
         else if(!load.loading && load.success) return <div className="loader ok"/>;
@@ -30,17 +37,13 @@ const ContactBlock = ({info, setter, errors, setErrors, sendData}) => {
         <div className="user-form__block">
             <div className="user-form__field">
                 <label className="user-form__label" htmlFor="email">Электронная почта</label>
-                <div className="form-input__wrapper">
-                    <input
-                        onChange={() => {
-                            checkEmail(emailRef.current.value)
-                            setter({...info, email: emailRef.current.value})
-                        }}
-                        ref={emailRef}
-                        type="email"
-                        className={`form-input__input${errors.email? " alert" : ""}`} id="email"/>
-                    <span className="form-input__alert">{onEmailChange()}</span>
-                </div>
+                <InputField
+                    type="email"
+                    inputId="email"
+                    inputRef={emailRef}
+                    error={errors.email}
+                    showError={onEmailError}
+                    onChange={onEmailChange}/>
                 <span className="user-form__info">Можно изменить адрес, указанный при регистрации.</span>
             </div>
             <div className="user-form__field">
@@ -58,11 +61,8 @@ const ContactBlock = ({info, setter, errors, setErrors, sendData}) => {
                 <button
                     onClick={() => {
                         setLoad({...load, loading: true});
-
-
                         if (sendData()) setLoad({loading: false, success: true, error: false});
                         else setLoad({loading: false, success: false, error: true});
-
                     }}
                     className="user-form__submit-btn">Изменить</button>
                 <span className="user-form__info">последние изменения 15 мая 2012 в 14:55:17</span>
